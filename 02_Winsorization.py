@@ -9,16 +9,26 @@ drive.mount('/content/drive')
 
 # 2. Input and Output definitions
 base_path = '/content/drive/MyDrive/Github-Cursor/Shariah Compliance Project/'
-input_file = base_path + 'computed_variables_2005_23_Combined.csv'
-output_file = base_path + "final_unbalanced_panel_2026.csv"
-report_file = base_path + "Methodology_Data_Cleaning_Report.docx"
+input_file = base_path + 'Extracted Data/04_computed_variables_2005_23_Combined.csv'
+
+# Corrected output_file location to 'Extracted Data' folder
+output_data_dir = base_path + "Extracted Data/"
+output_file = output_data_dir + "05_Winsorized_Data.csv"
+
+# Corrected report_file location to 'Results' folder with new name
+report_data_dir = base_path + "Results/"
+report_file = report_data_dir + "02_winsorization report.docx"
+
+# Ensure directories exist
+os.makedirs(output_data_dir, exist_ok=True)
+os.makedirs(report_data_dir, exist_ok=True)
 
 # 3. Load the dataset
 # Add a check to ensure the input file exists
 if not os.path.exists(input_file):
     raise FileNotFoundError(f"The input file was not found: {input_file}. Please ensure that the previous cell (Part 4) was run successfully to create this file.")
 df = pd.read_csv(input_file)
-continuous_cols = ['ROA', 'DR', 'IR', 'IncR', 'NLA', 'IAR']
+continuous_cols = ['ROA', 'DR', 'IR', 'IncR', 'NLA', 'IAR', 'Firm Size', 'Tangibility', 'Sales', 'Sales Growth']
 
 # Ensure numeric format
 for col in continuous_cols:
